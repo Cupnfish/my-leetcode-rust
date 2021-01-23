@@ -86,26 +86,32 @@ mod medium {
     }
     pub fn permute_unique(mut nums: Vec<i32>) -> Vec<Vec<i32>> {
         let mut ans = vec![];
-        let mut vis = vec![false;nums.len()];
+        let mut vis = vec![false; nums.len()];
         let mut perm = vec![];
         nums.sort();
-        fn backtrack(nums:&Vec<i32>,ans:&mut Vec<Vec<i32>>,idx:usize,perm:&mut Vec<i32>,vis:&mut Vec<bool>) {
-            if idx ==nums.len() {
+        fn backtrack(
+            nums: &Vec<i32>,
+            ans: &mut Vec<Vec<i32>>,
+            idx: usize,
+            perm: &mut Vec<i32>,
+            vis: &mut Vec<bool>,
+        ) {
+            if idx == nums.len() {
                 ans.push((*perm).clone());
                 return;
             }
             for i in 0..nums.len() {
-                if vis[i] || (i>0 && nums[i]==nums[i-1]&& !vis[i-1]) {
+                if vis[i] || (i > 0 && nums[i] == nums[i - 1] && !vis[i - 1]) {
                     continue;
                 }
                 perm.push(nums[i]);
                 vis[i] = true;
-                backtrack(nums,ans,idx + 1, perm,vis);
+                backtrack(nums, ans, idx + 1, perm, vis);
                 vis[i] = false;
                 perm.pop();
             }
         }
-        backtrack(&nums, &mut ans,0,&mut perm,&mut vis);
+        backtrack(&nums, &mut ans, 0, &mut perm, &mut vis);
 
         ans
     }
@@ -156,8 +162,13 @@ mod test {
             ]
         );
         assert_eq!(
-            permute_unique(vec![3,3,0,3]),
-            vec![vec![0,3,3,3],vec![3,0,3,3],vec![3,3,0,3],vec![3,3,3,0]]
+            permute_unique(vec![3, 3, 0, 3]),
+            vec![
+                vec![0, 3, 3, 3],
+                vec![3, 0, 3, 3],
+                vec![3, 3, 0, 3],
+                vec![3, 3, 3, 0]
+            ]
         );
     }
 }
